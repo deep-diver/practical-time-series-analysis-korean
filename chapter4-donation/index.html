@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>4장 시계열 데이터의 시뮬레이션 (기부) | fastpages</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="4장 시계열 데이터의 시뮬레이션 (기부)" />
+<meta name="author" content="Chansung Park" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A unique python library that extends the python programming language and provides utilities that enhance productivity." />
+<meta property="og:description" content="A unique python library that extends the python programming language and provides utilities that enhance productivity." />
+<link rel="canonical" href="https://deep-diver.github.io/practical-time-series-analysis-korean/chapter4-donation/" />
+<meta property="og:url" content="https://deep-diver.github.io/practical-time-series-analysis-korean/chapter4-donation/" />
+<meta property="og:site_name" content="fastpages" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-09-07T00:00:00-05:00" />
+<script type="application/ld+json">
+{"author":{"@type":"Person","name":"Chansung Park"},"description":"A unique python library that extends the python programming language and provides utilities that enhance productivity.","@type":"BlogPosting","headline":"4장 시계열 데이터의 시뮬레이션 (기부)","dateModified":"2020-09-07T00:00:00-05:00","datePublished":"2020-09-07T00:00:00-05:00","url":"https://deep-diver.github.io/practical-time-series-analysis-korean/chapter4-donation/","mainEntityOfPage":{"@type":"WebPage","@id":"https://deep-diver.github.io/practical-time-series-analysis-korean/chapter4-donation/"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/practical-time-series-analysis-korean/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://deep-diver.github.io/practical-time-series-analysis-korean/feed.xml" title="fastpages" /><link rel="shortcut icon" type="image/x-icon" href="/practical-time-series-analysis-korean/images/favicon.ico"><link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css">
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/practical-time-series-analysis-korean/">fastpages</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/practical-time-series-analysis-korean/about/">About Me</a><a class="page-link" href="/practical-time-series-analysis-korean/search/">Search</a><a class="page-link" href="/practical-time-series-analysis-korean/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">4장 시계열 데이터의 시뮬레이션 (기부)</h1><p class="page-description">A unique python library that extends the python programming language and provides utilities that enhance productivity.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-09-07T00:00:00-05:00" itemprop="datePublished">
+        Sep 7, 2020
+      </time>• 
+          <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <span class="p-author h-card" itemprop="name">Chansung Park</span></span>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      3 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/practical-time-series-analysis-korean/categories/#simulation">simulation</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/practical-time-series-analysis-korean/categories/#donation">donation</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-wrap flex-justify-end">
+          
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/deep-diver/practical-time-series-analysis-korean/master?filepath=_notebooks%2F2020-09-07-chapter4-donations.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/practical-time-series-analysis-korean/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/deep-diver/practical-time-series-analysis-korean/blob/master/_notebooks/2020-09-07-chapter4-donations.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/practical-time-series-analysis-korean/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2020-09-07-chapter4-donations.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## 회원 상태</span>
+<span class="n">years</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;2014&#39;</span><span class="p">,</span> <span class="s1">&#39;2015&#39;</span><span class="p">,</span> <span class="s1">&#39;2016&#39;</span><span class="p">,</span> <span class="s1">&#39;2017&#39;</span><span class="p">,</span> <span class="s1">&#39;2018&#39;</span><span class="p">]</span> 
+<span class="n">memberStatus</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;bronze&#39;</span><span class="p">,</span> <span class="s1">&#39;silver&#39;</span><span class="p">,</span> <span class="s1">&#39;gold&#39;</span><span class="p">,</span> <span class="s1">&#39;inactive&#39;</span><span class="p">]</span>
+
+<span class="c1">## np.random.choice의 p 인자 값을 조절하여</span>
+<span class="c1">## 각 부류의 발생 확률을 달리하여 데이터를 생성합니다</span>
+<span class="n">memberYears</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">years</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span>
+              <span class="n">p</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">,</span> <span class="mf">0.30</span><span class="p">,</span> <span class="mf">0.35</span><span class="p">])</span>					
+<span class="n">memberStats</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">memberStatus</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> 
+              <span class="n">p</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">])</span>
+		
+<span class="n">yearJoined</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;yearJoined&#39;</span><span class="p">:</span> <span class="n">memberYears</span><span class="p">,</span> 
+                           <span class="s1">&#39;memberStats&#39;</span><span class="p">:</span> <span class="n">memberStats</span><span class="p">})</span> 
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">yearJoined</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>yearJoined</th>
+      <th>memberStats</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2017</td>
+      <td>bronze</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2018</td>
+      <td>silver</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2017</td>
+      <td>inactive</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2018</td>
+      <td>bronze</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2018</td>
+      <td>bronze</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>995</th>
+      <td>2016</td>
+      <td>inactive</td>
+    </tr>
+    <tr>
+      <th>996</th>
+      <td>2016</td>
+      <td>silver</td>
+    </tr>
+    <tr>
+      <th>997</th>
+      <td>2017</td>
+      <td>silver</td>
+    </tr>
+    <tr>
+      <th>998</th>
+      <td>2017</td>
+      <td>bronze</td>
+    </tr>
+    <tr>
+      <th>999</th>
+      <td>2015</td>
+      <td>bronze</td>
+    </tr>
+  </tbody>
+</table>
+<p>1000 rows × 2 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">NUM_EMAILS_SENT_WEEKLY</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="c1">## 서로다른 패턴을 위한 몇 가지 함수를 정의 합니다</span>
+<span class="k">def</span> <span class="nf">never_opens</span><span class="p">(</span><span class="n">period_rng</span><span class="p">):</span> 
+  <span class="k">return</span> <span class="p">[]</span>
+					
+<span class="k">def</span> <span class="nf">constant_open_rate</span><span class="p">(</span><span class="n">period_rng</span><span class="p">):</span> 
+  <span class="n">n</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">NUM_EMAILS_SENT_WEEKLY</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> 
+  <span class="n">num_opened</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">binomial</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">period_rng</span><span class="p">))</span> 
+  <span class="k">return</span> <span class="n">num_opened</span>
+					
+<span class="k">def</span> <span class="nf">increasing_open_rate</span><span class="p">(</span><span class="n">period_rng</span><span class="p">):</span> 
+  <span class="k">return</span> <span class="n">open_rate_with_factor_change</span><span class="p">(</span><span class="n">period_rng</span><span class="p">,</span>				
+                                      <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mf">1.01</span><span class="p">,</span> 
+                                      <span class="mf">1.30</span><span class="p">))</span>
+					
+<span class="k">def</span> <span class="nf">decreasing_open_rate</span><span class="p">(</span><span class="n">period_rng</span><span class="p">):</span> 
+  <span class="k">return</span> <span class="n">open_rate_with_factor_change</span><span class="p">(</span><span class="n">period_rng</span><span class="p">,</span>
+                                      <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> 
+                                      <span class="mf">0.99</span><span class="p">))</span>
+				
+<span class="k">def</span> <span class="nf">open_rate_with_factor_change</span><span class="p">(</span><span class="n">period_rng</span><span class="p">,</span> <span class="n">fac</span><span class="p">):</span> 
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">period_rng</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="p">:</span>	
+       <span class="k">return</span> <span class="p">[]</span>
+    <span class="n">times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">period_rng</span><span class="p">),</span>
+                               <span class="nb">int</span><span class="p">(</span><span class="mf">0.1</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">period_rng</span><span class="p">)))</span> 
+    <span class="n">num_opened</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">period_rng</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">prd</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">period_rng</span><span class="p">),</span> <span class="mi">2</span><span class="p">):</span> 
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">n</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">NUM_EMAILS_SENT_WEEKLY</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> 
+                                                             <span class="mi">1</span><span class="p">)</span>
+            <span class="n">num_opened</span><span class="p">[</span><span class="n">prd</span><span class="p">:(</span><span class="n">prd</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">binomial</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> 
+                                                           <span class="mi">2</span><span class="p">)</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">p</span> <span class="o">*</span> <span class="n">fac</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>	
+            <span class="n">num_opened</span><span class="p">[</span><span class="n">prd</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">binomial</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">times</span><span class="p">)):</span>
+        <span class="n">num_opened</span><span class="p">[</span><span class="n">times</span><span class="p">[</span><span class="n">t</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">return</span> <span class="n">num_opened</span> 		
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## 기부 행동</span>
+<span class="k">def</span> <span class="nf">produce_donations</span><span class="p">(</span><span class="n">period_rng</span><span class="p">,</span> <span class="n">member_behavior</span><span class="p">,</span> <span class="n">num_emails</span><span class="p">,</span> 
+                      <span class="n">use_id</span><span class="p">,</span> <span class="n">member_join_year</span><span class="p">):</span>
+    <span class="n">donation_amounts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">75</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">250</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> 
+                                 <span class="mi">1000</span><span class="p">,</span> <span class="mi">1500</span><span class="p">,</span> <span class="mi">2000</span><span class="p">])</span>
+    <span class="n">member_has</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">donation_amounts</span><span class="p">)</span>
+    <span class="n">email_fraction</span> <span class="o">=</span> <span class="n">num_emails</span> <span class="o">/</span> <span class="p">(</span><span class="n">NUM_EMAILS_SENT_WEEKLY</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">period_rng</span><span class="p">))</span> 
+    <span class="n">member_gives</span> <span class="o">=</span> <span class="n">member_has</span> <span class="o">*</span> <span class="n">email_fraction</span>
+    <span class="n">member_gives_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">member_gives</span> <span class="o">&gt;=</span> <span class="n">donation_amounts</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">member_gives_idx</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">member_gives_idx</span><span class="p">,</span>
+                               <span class="nb">len</span><span class="p">(</span><span class="n">donation_amounts</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span><span class="p">),</span>
+                           <span class="mi">1</span><span class="p">)</span>
+    <span class="n">num_times_gave</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">poisson</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2018</span> <span class="o">-</span> <span class="n">member_join_year</span><span class="p">)</span>
+    <span class="n">times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">period_rng</span><span class="p">),</span> <span class="n">num_times_gave</span><span class="p">)</span>
+    <span class="n">dons</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;member&#39;</span>   <span class="p">:</span> <span class="p">[],</span>
+                         <span class="s1">&#39;amount&#39;</span>   <span class="p">:</span> <span class="p">[],</span>
+                         <span class="s1">&#39;timestamp&#39;</span><span class="p">:</span> <span class="p">[]})</span>
+					
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_times_gave</span><span class="p">):</span>
+        <span class="n">donation</span> <span class="o">=</span> <span class="n">donation_amounts</span><span class="p">[</span><span class="n">member_gives_idx</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">binomial</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">.</span><span class="mi">3</span><span class="p">)]</span>
+        <span class="n">ts</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">period_rng</span><span class="p">[</span><span class="n">times</span><span class="p">[</span><span class="n">n</span><span class="p">]]</span><span class="o">.</span><span class="n">start_time</span> <span class="o">+</span> <span class="n">random_weekly_time_delta</span><span class="p">())</span>
+        <span class="n">dons</span> <span class="o">=</span> <span class="n">dons</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+                  <span class="p">{</span><span class="s1">&#39;member&#39;</span> <span class="p">:[</span><span class="n">use_id</span><span class="p">],</span>
+                   <span class="s1">&#39;amount&#39;</span> <span class="p">:[</span><span class="n">donation</span><span class="p">],</span>
+                   <span class="s1">&#39;timestamp&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">ts</span><span class="p">]}))</span>
+
+        <span class="k">if</span> <span class="n">dons</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">dons</span> <span class="o">=</span> <span class="n">dons</span><span class="p">[</span><span class="n">dons</span><span class="o">.</span><span class="n">amount</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span>
+            <span class="c1">## we don&#39;t report zero donation events as this would not</span>
+            <span class="c1">## be recorded in a real world database </span>
+            <span class="c1">## 기부액이 0인 경우에는 보고하지 않습니다.</span>
+            <span class="c1">## 실세계에서 다룰 때 이러한 정보는 데이터베이스에 반영되지 않습니다.</span>
+    
+            <span class="k">return</span> <span class="n">dons</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">random_weekly_time_delta</span><span class="p">():</span>
+    <span class="n">days_of_week</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">7</span><span class="p">)]</span>
+    <span class="n">hours_of_day</span> <span class="o">=</span> <span class="p">[</span><span class="n">h</span> <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">23</span><span class="p">)]</span> 
+    <span class="n">minute_of_hour</span> <span class="o">=</span> <span class="p">[</span><span class="n">m</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">60</span><span class="p">)]</span> 
+    <span class="n">second_of_minute</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">60</span><span class="p">)]</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">days_of_week</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot; days&quot;</span> <span class="p">)</span> <span class="o">+</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">hours_of_day</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot; hours&quot;</span> <span class="p">)</span> <span class="o">+</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">minute_of_hour</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot; minutes&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">second_of_minute</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot; seconds&quot;</span><span class="p">)</span> 
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">behaviors</span>        <span class="o">=</span> <span class="p">[</span><span class="n">never_opens</span><span class="p">,</span> 
+                    <span class="n">constant_open_rate</span><span class="p">,</span> 
+                    <span class="n">increasing_open_rate</span><span class="p">,</span> 
+                    <span class="n">decreasing_open_rate</span><span class="p">]</span> 
+<span class="n">member_behaviors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">behaviors</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span>
+                                    <span class="p">[</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">])</span> 
+				
+<span class="n">rng</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">period_range</span><span class="p">(</span><span class="s1">&#39;2015-02-14&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-06-01&#39;</span><span class="p">,</span> <span class="n">freq</span> <span class="o">=</span> <span class="s1">&#39;W&#39;</span><span class="p">)</span>
+<span class="n">emails</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;member&#39;</span>      <span class="p">:</span> <span class="p">[],</span>
+                       <span class="s1">&#39;week&#39;</span>        <span class="p">:</span> <span class="p">[],</span>
+                       <span class="s1">&#39;emailsOpened&#39;</span><span class="p">:</span> <span class="p">[]})</span>	
+<span class="n">donations</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;member&#39;</span>   <span class="p">:</span> <span class="p">[],</span>
+                          <span class="s1">&#39;amount&#39;</span>   <span class="p">:</span> <span class="p">[],</span>
+                          <span class="s1">&#39;tunestamp&#39;</span><span class="p">:</span> <span class="p">[]})</span>	
+					
+<span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">yearJoined</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="c1">## randomly generate the date when a member would have joined</span>
+    <span class="c1">## 회원이 가입한 시기를 무작위로 생성합니다</span>
+    <span class="n">join_date</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="n">yearJoined</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">yearJoined</span><span class="p">)</span> <span class="o">+</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">365</span><span class="p">))</span> <span class="o">+</span> <span class="s1">&#39; days&#39;</span><span class="p">)</span>
+    <span class="n">join_date</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">join_date</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="s1">&#39;2018-06-01&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">to_period</span><span class="p">(</span><span class="n">freq</span><span class="o">=</span><span class="s1">&#39;W&#39;</span><span class="p">)</span>
+
+    <span class="c1">## member should not have action timestamps before joining</span>
+    <span class="c1">## 가입 전 어떤 행동에 대한 타임스탬프도 가져서는 안됩니다</span>
+    <span class="n">member_rng</span> <span class="o">=</span> <span class="n">rng</span><span class="p">[</span><span class="n">rng</span> <span class="o">&gt;</span> <span class="n">join_date</span><span class="p">]</span> 
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">member_rng</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">continue</span>
+
+    <span class="n">info</span> <span class="o">=</span> <span class="n">member_behaviors</span><span class="p">[</span><span class="n">idx</span><span class="p">](</span><span class="n">member_rng</span><span class="p">)</span> 
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">info</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">member_rng</span><span class="p">):</span>
+        <span class="n">emails</span> <span class="o">=</span> <span class="n">emails</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+           <span class="p">{</span><span class="s1">&#39;member&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">info</span><span class="p">),</span>
+            <span class="s1">&#39;week&#39;</span><span class="p">:</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">start_time</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">member_rng</span><span class="p">],</span>
+            <span class="s1">&#39;emailsOpened&#39;</span><span class="p">:</span> <span class="n">info</span><span class="p">}))</span> 
+        <span class="n">donations</span> <span class="o">=</span> <span class="n">donations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+           <span class="n">produce_donations</span><span class="p">(</span><span class="n">member_rng</span><span class="p">,</span> <span class="n">member_behaviors</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> 
+                                <span class="nb">sum</span><span class="p">(</span><span class="n">info</span><span class="p">),</span> <span class="n">idx</span><span class="p">,</span> <span class="n">join_date</span><span class="o">.</span><span class="n">year</span><span class="p">))</span> 
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">rng</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">period_range</span><span class="p">(</span><span class="s1">&#39;2015-02-14&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-06-01&#39;</span><span class="p">,</span> <span class="n">freq</span> <span class="o">=</span> <span class="s1">&#39;W&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">donations</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">donations</span><span class="o">.</span><span class="n">timestamp</span><span class="p">),</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> 
+<span class="n">donations</span><span class="o">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">donations</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Grouper</span><span class="p">(</span><span class="n">freq</span><span class="o">=</span><span class="s1">&#39;M&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">amount</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span> 
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f3cd1c95390&gt;</pre>
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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
+" />
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+</div>
+
+
+
+  </div><a class="u-url" href="/practical-time-series-analysis-korean/chapter4-donation/" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/practical-time-series-analysis-korean/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/practical-time-series-analysis-korean/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/practical-time-series-analysis-korean/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>An easy to use blogging platform with support for Jupyter Notebooks.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/fastai" title="fastai"><svg class="svg-icon grey"><use xlink:href="/practical-time-series-analysis-korean/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/fastdotai" title="fastdotai"><svg class="svg-icon grey"><use xlink:href="/practical-time-series-analysis-korean/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
